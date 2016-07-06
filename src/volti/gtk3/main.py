@@ -81,7 +81,7 @@ class VolumeTray(Gtk.StatusIcon):
 
         # watch for changes
         fd, eventmask = self.alsactrl.get_descriptors()
-        self.watchid = GObject.io_add_watch(fd, eventmask, self.update)
+        self.watchid = GObject.io_add_watch(fd, eventmask, GObject.IO_IN | GObject.IO_PRI, self.update)
 
     def init_prefs(self):
         """ Initialize preferences """
