@@ -20,6 +20,7 @@ import sys
 import alsaaudio as alsa
 
 from volti.utils import log
+from retrying import retry
 
 OLD_VOLUME = 0
 MUTED = False
@@ -64,6 +65,7 @@ class PyAlsaAudioControl():
             log.error("This program needs pyalsaaudio 0.6 or higher")
             sys.exit(1)
 
+    @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000, stop_max_delay=30000)            
     def open(self):
         """ Open mixer """
         self.get_mixer_list()
